@@ -8,3 +8,5 @@ let period;
 alert('hello world');
 
 console.log('привет мир!');
+console.log('привет мир!2');
+
