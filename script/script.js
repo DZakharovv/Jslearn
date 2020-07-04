@@ -28,7 +28,7 @@ const getExpensesMonth = () {
 // 2) Объявить функцию getAccumulatedMonth. Функция возвращает Накопления за месяц (Доходы минус расходы)
 const getAccumulatedMonth = (money, getExpensesMonth) => {
     if (!money) {
-        money = 0; 
+        money = 0;
     }
     return money - getExpensesMonth;
 };
@@ -41,39 +41,47 @@ const getTargetMonth = (mission, budgetMonth) => {
 };
 
 // 6) budgetDay высчитываем исходя из значения месячного накопления (accumulatedMonth)
-const budgetDay = accumulatedMonth / 30;
+const budgetDay = (accumulatedMonth, 30) => {
+    return Math.ceil(accumulatedMonth / 30);
+}
 
 
 
 const showTypeOf = (data) => {
-    console.log(data, typeof (data));
+        console.log(data, typeof (data));
 
-// Почистить консоль логи и добавить недостающие, должны остаться:
-//  - вызовы функции showTypeOf
-showTypeOf(money);
-showTypeOf(income);
-showTypeOf(deposit);
+        // Почистить консоль логи и добавить недостающие, должны остаться:
+        //  - вызовы функции showTypeOf
+        showTypeOf(money);
+        showTypeOf(income);
+        showTypeOf(deposit);
 
-//  - Расходы за месяц вызов getExpensesMonth
-console.log('Обязательные расходы за месяц: ', getExpensesMonth());
+        //  - Расходы за месяц вызов getExpensesMonth
+        console.log('Обязательные расходы за месяц: ', getExpensesMonth());
 
-//  - Вывод возможных расходов в виде массива (addExpenses)
-console.log(addExpenses.toLocaleLowerCase().split(', '));
+        //  - Вывод возможных расходов в виде массива (addExpenses)
+        console.log(addExpenses.toLocaleLowerCase().split(', '));
 
-//  - Cрок достижения цели в месяцах (результат вызова функции getTargetMonth)
-console.log(`Цель будет достигнута за: ${getTargetMonth(mission, accumulatedMonth)} месяцев`);
+        //  - Cрок достижения цели в месяцах (результат вызова функции getTargetMonth)
+        console.log(`Цель будет достигнута за: ${getTargetMonth(mission, accumulatedMonth)} месяцев`);
 
-//  - Бюджет на день
-console.log('Бюджет на день: ', Math.floor(budgetDay));
+        //  - Бюджет на день
+        console.log('Бюджет на день: ', Math.floor(budgetDay));
 
-//  - вызов функции getStatusIncome
-const getStatusIncome = (budget) => {
-    return isNaN(budget) ? 'Упс! Где-то закралась ошибка...' :
-        (budget < 0) ? 'Что то пошло не так' :
-        (budget < 600) ? 'Что то пошло не так' :
-        (budget === 600) ? 'У вас почти средний уровень дохода, но немного не хватает...' :
-        (budget < 1200) ? 'У вас средний уровень дохода' :
-        (budget === 1200) ? 'У вас почти получилось попасть в группу с высокий уровень дохода! Постарайтесь лучше!' :
-        'У вас высокий уровень дохода';
-};
-console.log('getStatusIncome(): ', getStatusIncome(budgetDay));
+        //  - вызов функции getStatusIncome
+        const getStatusIncome = (budget) => {
+            if (budgetDay === 1200) {
+                console.log('У вас почти получилось попасть в группу с высокий уровень дохода! Постарайтесь лучше!');
+            } else if (budgetDay === 600) {
+                console.log('У вас почти средний уровень дохода, но немного не хватает...');
+            } else if (budgetDay > 1200) {
+                console.log('У вас высокий уровень дохода');
+            } else if (budgetDay < 1200 && budgetDay > 600) {
+                console.log('У вас средний уровень дохода');
+            } else if (budgetDay < 600) {
+                console.log('К сожалению у вас уровень дохода ниже среднего');
+            } else if (budgetDay <= 0) {
+                console.log('Что то пошло не так');
+            }
+        };
+        console.log('getStatusIncome(): ', getStatusIncome(budgetDay));
