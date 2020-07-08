@@ -1,42 +1,48 @@
-let isNumber = function (n) {
-    return !isNan(parseFloat(n)) && isFinite(n);
-};
+'use sctrict'
 
+
+let isNumber = function (n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+};
 
 // Спрашиваем у пользователя “Ваш месячный доход?” и результат сохраняем в переменную money
 let money,
     income = 'Upwork';
 // Спросить у пользователя “Перечислите возможные расходы за рассчитываемый период через запятую” сохранить в переменную addExpenses
-addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую');
+// addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую');
 // Спросить у пользователя “Есть ли у вас депозит в банке?” и сохранить данные в переменной deposit (булево значение true/false)
 deposit = confirm('Есть ли у Вас депозит в банке?');
 mission = 100000;
 period = 12;
 // Спросить у пользователя по 2 раза каждый вопрос и записать ответы в разные переменные 
-let expenses1, expenses2;
+let expenses = [];
+let amount = 0;
+// let start = function() {
+//     do {
+//         money = prompt('Ваш месячный доход?');
+//     } while (!isNumber(money)); 
+// }
 
-let start = function() {
-    do {
-        money = prompt('Ваш месячный доход?');
-    } while (!isNumber(money)); 
-}
-
-start();
+// start();
 
 
 
 // 1) Объявить функцию getExpensesMonth. Функция возвращает сумму всех обязательных расходов за месяц
-const getExpensesMonth = () {
-    let sum = 0;
+let getExpensesMonth = function() {
 
     for (let i = 0; i < 2; i++) {
-        expenses[i] = prompt('Во сколько это обойдется?');
+        expenses[i] = prompt('Введите обязательную статью расходов:');
+        let count = 0;
         do {
             count = prompt('Во сколько это обойдется?');
-        } while (!isNumber(count))
+        } while (!isNumber(count));
+        amount += parseInt(count);
     }
-    return sum;
+    return amount;
 };
+
+getExpensesMonth();
+
 
 let expensesAmount = getExpensesMonth();
 
