@@ -1,4 +1,4 @@
-
+'use strict';
 
 let isNumber = function (n) {
     return !isNaN(parseFloat(n)) && isFinite(n)
@@ -37,14 +37,15 @@ let appData = {
 
 let amount = 0;
 let getExpensesMonth = function () {
-    let sum = 0;5000
+    let sum = 0;
 
     for (let i = 0; i < 2; i++) {
-        appData.expenses[i] = prompt('Во сколько это обойдется?');
-
+        appData.expenses[i] = prompt('Введите обязательную статью расходов:');
+        let count = 0;
         do {
-            let count = 0;
+            count = prompt('Во сколько это обойдется?');
         } while (!isNumber(count));
+        amount += +count;
 
         return amount;
     };
@@ -52,30 +53,23 @@ let getExpensesMonth = function () {
 };
 
 
-let expensesAmount = getExpensesMonth();
-
 let getAccumulatedMonth = function () {
     if (!money) {
         money = 0;
     }
     return money - getExpensesAmount;
 };
-let accumulatedMonth = appData.expensesAmount(money, expensesAmount());
+let accumulatedMonth = getAccumulatedMonth(money, appData.expenses);
 
 let getTargetMonth = function () {
     return Math.ceil(appData.mission / appData.budgetMonth);
 };
 
 let budgetDay = function () {
-    return Math.ceil(appData.accumulatedMonth / 30);
+    return Math.ceil(accumulatedMonth / 30);
 }
 
-console.log('Обязательные расходы за месяц: ', appData.getExpensesMonth());
-
-
-getTargetMonth: () => {
-    return Math.ceil(appData.mission / appDaata.budgetMonth);
-}
+console.log('Обязательные расходы за месяц: ', getExpensesMonth());
 
 console.log('Бюджет на день: ', Math.floor(appData.budgetDay));
 
@@ -95,3 +89,6 @@ const getStatusIncome = (budget) => {
     }
 };
 console.log('getStatusIncome(): ', getStatusIncome(appData.budgetDay));
+
+
+appData.asking();
