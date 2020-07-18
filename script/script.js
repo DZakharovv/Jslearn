@@ -31,13 +31,12 @@ let appData = {
         appData.addExpenses = addExpenses.toLowerCase().split(',');
         appData.deposit = confirm('Есть ли у Вас депозит в банке?');
         for (let i = 0; i < 2; i++) {
-            appData.expenses[prompt('Введите обязательную статью расходов:')] = (function () {
             let count = 0;
+            let key = prompt('Введите обязательную статью расходов:');
             do {
                 count = prompt('Во сколько это обойдется?');
             } while (!isNumber(count));
-            return +count;
-            })();
+            appData.expenses[key] = +count;
         }
     },
     getExpensesMonth: function () {
