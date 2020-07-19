@@ -20,31 +20,31 @@ let appData = {
     expenses: {},
     addExpenses: [],
     deposit: false,
+    percentDeposit: 0,
+    moneyDeposit: 0,
     mission: 100000,
     period: 12,
     budget: +money,
     budgetDay: 0,
     budgetMonth: 0,
     expensesMonth: 0,
-    amount: [],
     asking: function () {
         let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую');
         appData.addExpenses = addExpenses.toLowerCase().split(',');
         appData.deposit = confirm('Есть ли у Вас депозит в банке?');
         for (let i = 0; i < 2; i++) {
-            appData.expenses[i] = prompt('Введите обязательную статью расходов:');
             let count = 0;
+            let key = prompt('Введите обязательную статью расходов:');
             do {
                 count = prompt('Во сколько это обойдется?');
             } while (!isNumber(count));
-            appData.amount.push(+count);
+            appData.expenses[key] = +count;
         }
-        
     },
-    getExpensesMonth:  function () {
+    getExpensesMonth: function () {
         appData.expensesMonth = 0;
-        for (let elem in appData.amount) {
-            appData.expensesMonth += appData.amount[elem];
+        for (let elem in appData.expenses) {
+            appData.expensesMonth += appData.expenses[elem];
         }
     },
     getBudget: function () {
@@ -72,6 +72,22 @@ let appData = {
             return 'Что то пошло не так';
         }
     },
+    getInfoDeposit: function(){
+        if(appData.deposit){
+            let n = 0;
+            do {
+                n = prompt('Какой годовой процент?', '10');
+            } while (!isNumber(n) && n > 0);
+            appData.precentDeposit = +n;
+            do {
+                appData.moneyDeposit = prompt('Какая сумма заложена?', 10000);
+            } while (!isNumber(n) && n > 0);
+            appData.moneyDeposit = +n;
+        }
+    },
+    calcSavedMoney: function() {
+        return appData.budgetMonth * appData.period;
+    }
 };
 
 appData.asking();
