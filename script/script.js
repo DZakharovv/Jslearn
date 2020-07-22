@@ -3,6 +3,10 @@
 let isNumber = function (n) {
     return !isNaN(parseFloat(n)) && isFinite(n)
 };
+let isString = function (str) {
+    let pattern = /^[,а-яА-ЯёЁa-zA-Z]+$/;
+    return pattern.test(str)
+}
 
 let money;
 
@@ -29,17 +33,32 @@ let appData = {
     budgetMonth: 0,
     expensesMonth: 0,
     asking: function () {
-        let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую');
+
+        if(confirm('Есть ли у Вас дополнительный заработок?')){
+            let itemIncome = prompt('Какой у вас дополнительный заработок?', 'Таксую');
+            let cashIncome = prompt('Сколько в месяц Вы на этом зарабатываете?', 10000);
+            appData.income[itemIncome] = cashIncome;
+        }
+        let addExpenses = '';
+            do {
+                addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'интернет,театр,жкх');
+            }while (!isString(addExpenses));
         appData.addExpenses = addExpenses.toLowerCase().split(',');
-        appData.deposit = confirm('Есть ли у Вас депозит в банке?');
+        for (let i = 0; i < appData.addExpenses.length; i++) {
+            appData.addExpenses[i] = appData.addExpenses[i][0].toUpperCase() + appData.addExpenses[i].slice(1);
+        }
         for (let i = 0; i < 2; i++) {
+            let key = '';
             let count = 0;
-            let key = prompt('Введите обязательную статью расходов:');
+            do {
+                key = prompt('Введите обязательную статью расходов:', 'Садик');
+            }while (!isString(key));
             do {
                 count = prompt('Во сколько это обойдется?');
             } while (!isNumber(count));
             appData.expenses[key] = +count;
         }
+        appData.deposit = confirm('Есть ли у Вас депозит в банке?');
     },
     getExpensesMonth: function () {
         appData.expensesMonth = 0;
@@ -72,17 +91,19 @@ let appData = {
             return 'Что то пошло не так';
         }
     },
+
     getInfoDeposit: function(){
         if(appData.deposit){
             let n = 0;
+            let m = 0;
             do {
-                n = prompt('Какой годовой процент?', '10');
-            } while (!isNumber(n) && n > 0);
-            appData.precentDeposit = +n;
+                n = prompt('Какой годовой процент?', 10);
+            } while (!isNumber(n));
+            appData.percentDeposit = +n;
             do {
-                appData.moneyDeposit = prompt('Какая сумма заложена?', 10000);
-            } while (!isNumber(n) && n > 0);
-            appData.moneyDeposit = +n;
+                m = prompt('Какая сумма заложена?', 10000);
+            } while (!isNumber(m));
+            appData.moneyDeposit = +m;
         }
     },
     calcSavedMoney: function() {
@@ -93,9 +114,13 @@ let appData = {
 appData.asking();
 appData.getExpensesMonth();
 appData.getBudget();
+appData.getInfoDeposit();
+appData.calcSavedMoney();
 console.log('Расходы за месяц: ', appData.expensesMonth);
 console.log('Уровень дохода: ', appData.getStatusIncome());
 console.log('Наша программа включает в себя данные: ');
 for (let elem in appData) {
     console.log(elem, appData[elem]);
 };
+
+console.log(appData.addExpenses.join(', '));
