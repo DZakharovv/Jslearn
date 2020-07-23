@@ -4,9 +4,15 @@ let isNumber = function (n) {
     return !isNaN(parseFloat(n)) && isFinite(n)
 };
 let isString = function (str) {
+
     let pattern = /^[,а-яА-ЯёЁa-zA-Z]+$/;
+    if (str === null) {
+        return;
+    }
     return pattern.test(str)
 }
+
+
 
 let money;
 
