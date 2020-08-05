@@ -50,10 +50,10 @@ let appData = {
         //     money = prompt('Ваш месячный доход?');
         // } while (!isNumber(money));
 
-        if (salaryAmount.value === '') {
-            alert('Ошибка в поле "Месячный доход"');
-            return
-        }
+        // if (salaryAmount.value === '') {
+        //     alert('Ошибка в поле "Месячный доход"');
+        //     return
+        // }
 
         appData.budget = +salaryAmount.value;
 
@@ -63,6 +63,7 @@ let appData = {
         appData.getAddExpenses();
         appData.getAddIncome();
         appData.getBudget();
+        appData.changePeriodSelect();
 
         appData.showResult();
     },
@@ -176,12 +177,24 @@ let appData = {
     },
     calcPeriod: function () {
         return appData.budgetMonth * periodSelect.value;
-    }
+    },
+    changePeriodSelect: function () {
+        let periodAmount = document.querySelector('.period-amount');
+        periodAmount.textContent = periodSelect.value;
+        incomePeriodValue.value = appData.calcPeriod();
+    },
+
+    blockStart: function (){
+        start.disabled = !salaryAmount.value.trim();
+    },
 };
 
+appData.start();
 start.addEventListener('click', appData.start);
 expensesPlus.addEventListener('click', appData.addExpensesBlock);
 incomePlus.addEventListener('click', appData.addIncomeBlock);
+periodSelect.addEventListener('input', appData.changePeriodSelect);
+salaryAmount.addEventListener('input', appData.blockStart);
 // console.log('Расходы за месяц: ', appData.expensesMonth);
 // console.log('Уровень дохода: ', appData.getStatusIncome());
 // console.log('Наша программа включает в себя данные: ');
