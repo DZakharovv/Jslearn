@@ -46,15 +46,6 @@ let appData = {
     budgetMonth: 0,
     expensesMonth: 0,
     start: function () {
-        // do {
-        //     money = prompt('Ваш месячный доход?');
-        // } while (!isNumber(money));
-
-        // if (salaryAmount.value === '') {
-        //     alert('Ошибка в поле "Месячный доход"');
-        //     return
-        // }
-
         appData.budget = +salaryAmount.value;
 
         appData.getExpenses();
@@ -146,6 +137,7 @@ let appData = {
     },
     getTargetMonth: function () {
         return Math.ceil(targetAmount.value / appData.budgetMonth);
+
     },
     getStatusIncome: function () {
         if (appData.budgetDay === 1200) {
@@ -189,7 +181,7 @@ let appData = {
     },
 };
 
-appData.start();
+appData.blockStart();
 start.addEventListener('click', appData.start);
 expensesPlus.addEventListener('click', appData.addExpensesBlock);
 incomePlus.addEventListener('click', appData.addIncomeBlock);
