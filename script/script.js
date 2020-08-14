@@ -193,7 +193,7 @@ let appData = {
     changePeriodSelect: function () {
         let periodAmount = document.querySelector('.period-amount');
         periodAmount.textContent = periodSelect.value;
-        incomePeriodValue.value = appData.calcPeriod();
+        incomePeriodValue.value = this.calcPeriod();
     },
 
     blockStart: function () {
@@ -210,7 +210,7 @@ start.addEventListener('click', foo);
 
 expensesPlus.addEventListener('click', appData.addExpensesBlock);
 incomePlus.addEventListener('click', appData.addIncomeBlock);
-periodSelect.addEventListener('input', appData.changePeriodSelect);
+periodSelect.addEventListener('input', appData.changePeriodSelect.bind(appData));
 salaryAmount.addEventListener('input', appData.blockStart);
 // console.log('Расходы за месяц: ', this.expensesMonth);
 // console.log('Уровень дохода: ', this.getStatusIncome());
